@@ -168,6 +168,7 @@ export default class MainWindow {
       },
       onClose: () => {
         if (this.onClose) {
+          ui.tool?.cancel();
           this.onClose();
         }
       }
@@ -185,6 +186,7 @@ export default class MainWindow {
   }
 
   static close(): void {
+    ui.tool?.cancel();
     ui.closeWindows(Environment.namespace);
   }
 
