@@ -198,10 +198,15 @@ export default class MainWindow {
         "terrain"
       ],
       onMove: (e: ToolEventArgs) => {
-        if (!e.isDown) return;
-
         const tileCoords = MainWindow.worldToTileCoords(e.mapCoords);
         var tile = map.getTile(tileCoords.x, tileCoords.y);
+        ui.tileSelection.range = {
+          leftTop: e.mapCoords,
+          rightBottom: e.mapCoords
+        };
+
+        if (!e.isDown) return;
+
         for (let i = 0; i < tile.elements.length; i++) {
           if (tile.elements[i].type === "surface") {
             (tile.elements[i] as SurfaceElement).grassLength = random
