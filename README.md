@@ -1,6 +1,10 @@
 # Grass Grower for OpenRCT2
 
-This is a plugin for OpenRCT2. (To fill in)
+![grassgrower](https://user-images.githubusercontent.com/5436387/141602467-05b1ad62-60d0-4a97-b560-d50fedcb085c.png)
+
+This is a plugin for OpenRCT2. You can use it to manually set the grass levels for any tile in your park that has the grass texture. You can set the grass level to mowed, clear, or one of two levels of "clumps" (what the game calls long grass).
+
+**These changes are not permanent.** Grass will still grow as usual; this plugin is a one-time effect that does not override the march of time. It is intended to be used to beautify your park before (for example) taking a screenshot, or submitting a save file for a contest or archive.
 
 ### Planned features / known issues
 
