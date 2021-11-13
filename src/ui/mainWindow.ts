@@ -18,21 +18,11 @@ export default class MainWindow {
   private smallButtonHeight: number = 22;
 
   private createWindow(): Window {
-    const lblText: LabelWidget = {
-      type: "label",
-      x: this.margin,
-      y: this.margin + this.toolbarHeight,
-      width: this.windowWidth - this.margin * 2,
-      height: 100,
-      text: "Changes this tool makes are not\r\npermanent, since all grass will\r\nstill grow over time. Use this"
-        + "\r\ntool to paint your terrain before\r\nsaving or taking screenshots."
-    };
-
     const btnMowed: ButtonWidget = {
       type: "button",
       name: "btnMowed",
       x: this.margin,
-      y: lblText.y + lblText.height + this.margin,
+      y: this.margin + this.toolbarHeight,
       height: this.smallButtonHeight,
       width: this.windowWidth - this.margin * 2,
       border: true,
@@ -40,7 +30,7 @@ export default class MainWindow {
       onClick: (): void => {
         this.unPressButtons();
         this.pressButton("btnMowed");
-        this.activateTool(GrassLengths.GRASS_LENGTH_MOWED);
+        MainWindow.activateTool(GrassLengths.GRASS_LENGTH_MOWED);
       },
       isPressed: false
     };
@@ -57,7 +47,7 @@ export default class MainWindow {
       onClick: (): void => {
         this.unPressButtons();
         this.pressButton("btnClear");
-        this.activateTool(GrassLengths.GRASS_LENGTH_CLEAR_0);
+        MainWindow.activateTool(GrassLengths.GRASS_LENGTH_CLEAR_0);
       },
       isPressed: false
     };
@@ -74,7 +64,7 @@ export default class MainWindow {
       onClick: (): void => {
         this.unPressButtons();
         this.pressButton("btnClumpsShort");
-        this.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_0);
+        MainWindow.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_0);
       },
       isPressed: false
     };
@@ -91,7 +81,7 @@ export default class MainWindow {
       onClick: (): void => {
         this.unPressButtons();
         this.pressButton("btnClumpsLong");
-        this.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_2);
+        MainWindow.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_2);
       },
       isPressed: false
     };
@@ -108,7 +98,7 @@ export default class MainWindow {
       onClick: (): void => {
         this.unPressButtons();
         this.pressButton("btnClumpsRandom");
-        this.activateTool(GrassLengths.GRASS_LENGTH_MOWED, true);
+        MainWindow.activateTool(GrassLengths.GRASS_LENGTH_MOWED, true);
       },
       isPressed: false
     };
@@ -135,7 +125,6 @@ export default class MainWindow {
       width: this.windowWidth,
       height: btnCancel.y + btnCancel.height + this.margin,
       widgets: [
-        lblText,
         btnMowed,
         btnClear,
         btnClumpsShort,
@@ -172,7 +161,7 @@ export default class MainWindow {
     ui.closeWindows(Environment.namespace);
   }
 
-  activateTool(selectedLength: GrassLengths, random: boolean = false): void {
+  static activateTool(selectedLength: GrassLengths, random: boolean = false): void {
     ui.activateTool(<ToolDesc>{
       id: "gg-painter",
       cursor: "dig_down",
@@ -181,7 +170,7 @@ export default class MainWindow {
       ],
       onMove: (e: ToolEventArgs) => {
         const tileCoords = MainWindow.worldToTileCoords(e.mapCoords);
-        var tile = map.getTile(tileCoords.x, tileCoords.y);
+        const tile = map.getTile(tileCoords.x, tileCoords.y);
         ui.tileSelection.range = {
           leftTop: e.mapCoords,
           rightBottom: e.mapCoords
@@ -189,10 +178,10 @@ export default class MainWindow {
 
         if (!e.isDown) return;
 
-        for (let i = 0; i < tile.elements.length; i++) {
+        for (let i = 0; i < tile.elements.length; i += 1) {
           if (tile.elements[i].type === "surface") {
             (tile.elements[i] as SurfaceElement).grassLength = random
-              ? this.randomClump()
+              ? MainWindow.randomClump()
               : selectedLength;
           }
         }
@@ -200,18 +189,18 @@ export default class MainWindow {
     });
   }
 
-  randomClump(): GrassLengths {
-    return Math.random() < 0.5
-      ? GrassLengths.GRASS_LENGTH_CLUMPS_0
-      : GrassLengths.GRASS_LENGTH_CLUMPS_2;
-  }
-
-  pressButton(name: string): void {
+  private pressButton(name: string): void {
     (this.window.widgets.filter((w) => w.name === name)[0] as ButtonWidget).isPressed = true;
   }
 
-  unPressButtons(): void {
-    (this.window.widgets.filter((w) => w.type === "button")).forEach((b: ButtonWidget) => b.isPressed = false);
+  private unPressButtons(): void {
+    (this.window.widgets.filter((w) => w.type === "button")).forEach((b: ButtonWidget) => { b.isPressed = false; });
+  }
+
+  static randomClump(): GrassLengths {
+    return Math.random() < 0.5
+      ? GrassLengths.GRASS_LENGTH_CLUMPS_0
+      : GrassLengths.GRASS_LENGTH_CLUMPS_2;
   }
 
   static worldToTileCoords(coords: CoordsXY): CoordsXY {

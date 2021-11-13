@@ -1,7 +1,7 @@
 /// <reference path="environment.d.ts" />
 
 export const pluginVersion = "1.0";
-export const pluginName = "GrassGrower";
+export const pluginName = "Grass Grower";
 export const pluginAuthors = ["fidwell"];
 export const buildConfiguration: BuildConfiguration = __BUILD_CONFIGURATION__;
 export const isProduction = (buildConfiguration === "production");

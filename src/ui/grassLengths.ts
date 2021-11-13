@@ -6,4 +6,4 @@ export enum GrassLengths {
   GRASS_LENGTH_CLUMPS_0,
   GRASS_LENGTH_CLUMPS_1,
   GRASS_LENGTH_CLUMPS_2
-};
+}
