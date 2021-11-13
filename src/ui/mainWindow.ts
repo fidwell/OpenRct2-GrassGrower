@@ -62,52 +62,35 @@ export default class MainWindow {
       isPressed: false
     };
 
-    const btnClumps0: ButtonWidget = {
+    const btnClumpsShort: ButtonWidget = {
       type: "button",
-      name: "btnClumps0",
+      name: "btnClumpsShort",
       x: this.margin,
       y: btnClear.y + btnClear.height,
       height: this.smallButtonHeight,
       width: this.windowWidth - this.margin * 2,
       border: true,
-      text: "Clumps 0",
+      text: "Clumps - Short",
       onClick: (): void => {
         this.unPressButtons();
-        this.pressButton("btnClumps0");
+        this.pressButton("btnClumpsShort");
         this.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_0);
       },
       isPressed: false
     };
 
-    const btnClumps1: ButtonWidget = {
+    const btnClumpsLong: ButtonWidget = {
       type: "button",
-      name: "btnClumps1",
+      name: "btnClumpsLong",
       x: this.margin,
-      y: btnClumps0.y + btnClumps0.height,
+      y: btnClumpsShort.y + btnClumpsShort.height,
       height: this.smallButtonHeight,
       width: this.windowWidth - this.margin * 2,
       border: true,
-      text: "Clumps 1",
+      text: "Clumps - Long",
       onClick: (): void => {
         this.unPressButtons();
-        this.pressButton("btnClumps1");
-        this.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_1);
-      },
-      isPressed: false
-    };
-
-    const btnClumps2: ButtonWidget = {
-      type: "button",
-      name: "btnClumps2",
-      x: this.margin,
-      y: btnClumps1.y + btnClumps1.height,
-      height: this.smallButtonHeight,
-      width: this.windowWidth - this.margin * 2,
-      border: true,
-      text: "Clumps 2",
-      onClick: (): void => {
-        this.unPressButtons();
-        this.pressButton("btnClumps2");
+        this.pressButton("btnClumpsLong");
         this.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_2);
       },
       isPressed: false
@@ -117,11 +100,11 @@ export default class MainWindow {
       type: "button",
       name: "btnClumpsRandom",
       x: this.margin,
-      y: btnClumps2.y + btnClumps2.height,
+      y: btnClumpsLong.y + btnClumpsLong.height,
       height: this.smallButtonHeight,
       width: this.windowWidth - this.margin * 2,
       border: true,
-      text: "Clumps Random",
+      text: "Clumps - Random",
       onClick: (): void => {
         this.unPressButtons();
         this.pressButton("btnClumpsRandom");
@@ -155,9 +138,8 @@ export default class MainWindow {
         lblText,
         btnMowed,
         btnClear,
-        btnClumps0,
-        btnClumps1,
-        btnClumps2,
+        btnClumpsShort,
+        btnClumpsLong,
         btnClumpsRandom,
         btnCancel
       ],
@@ -219,7 +201,9 @@ export default class MainWindow {
   }
 
   randomClump(): GrassLengths {
-    return GrassLengths.GRASS_LENGTH_CLUMPS_0 + Math.floor(Math.random() * 3);
+    return Math.random() < 0.5
+      ? GrassLengths.GRASS_LENGTH_CLUMPS_0
+      : GrassLengths.GRASS_LENGTH_CLUMPS_2;
   }
 
   pressButton(name: string): void {
