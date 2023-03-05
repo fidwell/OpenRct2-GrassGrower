@@ -18,7 +18,8 @@ export default class MainWindow {
   private smallButtonHeight: number = 22;
 
   private createWindow(): Window {
-    const btnMowed: ButtonWidget = {
+    const btnMowed = <ButtonWidget>{
+      window: this.window,
       type: "button",
       name: "btnMowed",
       x: this.margin,
@@ -27,15 +28,20 @@ export default class MainWindow {
       width: this.windowWidth - this.margin * 2,
       border: true,
       text: "Mowed",
-      onClick: (): void => {
+      onClick: () => {
         this.unPressButtons();
         this.pressButton("btnMowed");
         MainWindow.activateTool(GrassLengths.GRASS_LENGTH_MOWED);
       },
-      isPressed: false
+      isPressed: false,
+      isDisabled: false,
+      isVisible: true,
+      tooltip: null,
+      image: null
     };
 
-    const btnClear: ButtonWidget = {
+    const btnClear = <ButtonWidget>{
+      window: this.window,
       type: "button",
       name: "btnClear",
       x: this.margin,
@@ -44,15 +50,20 @@ export default class MainWindow {
       width: this.windowWidth - this.margin * 2,
       border: true,
       text: "Clear",
-      onClick: (): void => {
+      onClick: () => {
         this.unPressButtons();
         this.pressButton("btnClear");
         MainWindow.activateTool(GrassLengths.GRASS_LENGTH_CLEAR_0);
       },
-      isPressed: false
+      isPressed: false,
+      isDisabled: false,
+      isVisible: true,
+      tooltip: null,
+      image: null
     };
 
-    const btnClumpsShort: ButtonWidget = {
+    const btnClumpsShort = <ButtonWidget>{
+      window: this.window,
       type: "button",
       name: "btnClumpsShort",
       x: this.margin,
@@ -61,15 +72,20 @@ export default class MainWindow {
       width: this.windowWidth - this.margin * 2,
       border: true,
       text: "Clumps - Short",
-      onClick: (): void => {
+      onClick: () => {
         this.unPressButtons();
         this.pressButton("btnClumpsShort");
         MainWindow.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_0);
       },
-      isPressed: false
+      isPressed: false,
+      isDisabled: false,
+      isVisible: true,
+      tooltip: null,
+      image: null
     };
 
-    const btnClumpsLong: ButtonWidget = {
+    const btnClumpsLong = <ButtonWidget>{
+      window: this.window,
       type: "button",
       name: "btnClumpsLong",
       x: this.margin,
@@ -78,15 +94,20 @@ export default class MainWindow {
       width: this.windowWidth - this.margin * 2,
       border: true,
       text: "Clumps - Long",
-      onClick: (): void => {
+      onClick: () => {
         this.unPressButtons();
         this.pressButton("btnClumpsLong");
         MainWindow.activateTool(GrassLengths.GRASS_LENGTH_CLUMPS_2);
       },
-      isPressed: false
+      isPressed: false,
+      isDisabled: false,
+      isVisible: true,
+      tooltip: null,
+      image: null
     };
 
-    const btnClumpsRandom: ButtonWidget = {
+    const btnClumpsRandom = <ButtonWidget>{
+      window: this.window,
       type: "button",
       name: "btnClumpsRandom",
       x: this.margin,
@@ -95,15 +116,20 @@ export default class MainWindow {
       width: this.windowWidth - this.margin * 2,
       border: true,
       text: "Clumps - Random",
-      onClick: (): void => {
+      onClick: () => {
         this.unPressButtons();
         this.pressButton("btnClumpsRandom");
         MainWindow.activateTool(GrassLengths.GRASS_LENGTH_MOWED, true);
       },
-      isPressed: false
+      isPressed: false,
+      isDisabled: false,
+      isVisible: true,
+      tooltip: null,
+      image: null
     };
 
-    const btnCancel: ButtonWidget = {
+    const btnCancel = <ButtonWidget>{
+      window: this.window,
       type: "button",
       name: "btnCancel",
       x: this.margin,
@@ -111,12 +137,16 @@ export default class MainWindow {
       height: this.smallButtonHeight,
       width: this.windowWidth - this.margin * 2,
       border: true,
-      text: "Cancel",
-      onClick: (): void => {
+      text: "Cancel tool",
+      onClick: () => {
         this.unPressButtons();
         ui.tool?.cancel();
       },
-      isPressed: false
+      isPressed: false,
+      isDisabled: false,
+      isVisible: true,
+      tooltip: null,
+      image: null
     };
 
     const window = ui.openWindow({
